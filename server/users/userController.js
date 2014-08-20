@@ -14,7 +14,7 @@ module.exports = {
           next(new Error('User does not exist'));
         } else {
             if (user.comparePasswords(password)) {
-                return user
+                return user;
             }
         }
       })
