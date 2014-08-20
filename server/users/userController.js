@@ -13,8 +13,9 @@ module.exports = {
         if (!user) {
           next(new Error('User does not exist'));
         } else {
-          if (user.comparePasswords(password))
+          if (user.comparePasswords(password)) {
             return user;
+          }
         }
       })
       .then(function (foundUser) {

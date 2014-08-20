@@ -1,7 +1,14 @@
 angular.module('shortly.services', [])
 
 .factory('Links', function ($http) {
-  // Your code here
+  return {
+    get: function () {
+      return $http.get('/api/links');
+    },
+    create: function (link) {
+      return $http.post('/api/links', link);
+    }
+  };
 })
 .factory('Auth', function ($http, $location, $window) {
   // Don't touch this Auth service!!!

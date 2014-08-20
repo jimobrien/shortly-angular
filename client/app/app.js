@@ -15,6 +15,14 @@ angular.module('shortly', [
       templateUrl: 'app/auth/signup.html',
       controller: 'AuthController'
     })
+    .when('/links', {
+      templateUrl: 'app/links/links.html',
+      controller: 'LinksController'
+    })
+    .when('/shorten', {
+      templateUrl: 'app/shorten/shorten.html',
+      controller: 'ShortenController'
+    });
     // Your code here
 
     // We add our $httpInterceptor into the array
@@ -33,6 +41,9 @@ angular.module('shortly', [
         object.headers['x-access-token'] = jwt;
       }
       object.headers['Allow-Control-Allow-Origin'] = '*';
+      object.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
+
+      console.log('jwt: ', jwt)
       return object;
     }
   };
@@ -52,7 +63,8 @@ angular.module('shortly', [
         .then(function () {
           console.log('Good to go in!');
         })
-        .catch(function () {
+        .catch(function (e) {
+          console.log(e, 'error on auth');
           $location.path('/signin');
         });
     }
