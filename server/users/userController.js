@@ -33,7 +33,6 @@ module.exports = {
         password  = req.body.password,
         create,
         newUser;
-
     var findOne = Q.nbind(User.findOne, User);
     // check to see if user already exists
     findOne({username: username})
@@ -52,7 +51,6 @@ module.exports = {
       })
       .then(function (user) {
         // create token to send back for auth
-
         var token = jwt.encode(user, 'secret');
         res.json({token: token});
       })
