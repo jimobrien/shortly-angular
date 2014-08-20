@@ -13,7 +13,8 @@ module.exports = {
         if (!user) {
           next(new Error('User does not exist'));
         } else {
-          return user.comparePasswords(password);
+          if (user.comparePasswords(password))
+            return user;
         }
       })
       .then(function (foundUser) {
@@ -52,6 +53,7 @@ module.exports = {
       })
       .then(function (user) {
         // create token to send back for auth
+
         var token = jwt.encode(user, 'secret');
         res.json({token: token});
       })
@@ -66,11 +68,13 @@ module.exports = {
     // then decode the token, which we end up being the user object
     // check to see if that user exists in the database
     var token = req.headers['x-access-token'];
+
     if (!token) {
       next(new Error('No token'));
     } else {
       var user = jwt.decode(token, 'secret');
       var findUser = Q.nbind(User.findOne, User);
+
       findUser({username: user.username})
         .then(function (foundUser) {
           if (foundUser) {
