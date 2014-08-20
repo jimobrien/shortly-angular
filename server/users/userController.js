@@ -35,7 +35,6 @@ module.exports = {
         newUser;
 
     var findOne = Q.nbind(User.findOne, User);
-
     // check to see if user already exists
     findOne({username: username})
       .then(function(user) {
@@ -68,13 +67,11 @@ module.exports = {
     // then decode the token, which we end up being the user object
     // check to see if that user exists in the database
     var token = req.headers['x-access-token'];
-
     if (!token) {
       next(new Error('No token'));
     } else {
       var user = jwt.decode(token, 'secret');
       var findUser = Q.nbind(User.findOne, User);
-
       findUser({username: user.username})
         .then(function (foundUser) {
           if (foundUser) {
